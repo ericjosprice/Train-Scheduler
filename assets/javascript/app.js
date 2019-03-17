@@ -23,11 +23,9 @@ $("#add-train-btn").on("click", function (event) {
     var sDestination = $("#destination-input").val().trim();
     var nTime = $("#time-input").val().trim();
     var nFrequency = $("#frequency-input").val().trim();
-    var sStatus = $("#status-input").val().trim();
     if (sTrainName === "" ||
         sDestination === "" ||
         nTime === "" ||
-        sStatus === "" ||
         nFrequency === "") {
         alert("Complete all fields to continue.");
         return;
@@ -38,7 +36,6 @@ $("#add-train-btn").on("click", function (event) {
             destination: sDestination,
             time: nTime,
             frequency: nFrequency,
-            status: sStatus,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
 
@@ -46,7 +43,6 @@ $("#add-train-btn").on("click", function (event) {
         $("#destination-input").val("")
         $("#time-input").val("")
         $("#frequency-input").val("")
-        $("#status-input").val("")
     }
 });
 
@@ -61,7 +57,9 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(sv.destination);
     console.log(sv.time);
     console.log(sv.frequency);
-    console.log(sv.status);
+    console.log("moment: " + moment().startOf(sv.time).fromNow());
+ console.log("minutes till train: " + moment(sv.time, 'HH:mm').diff(moment(), "minutes")) 
+
 
     // Change the HTML to reflect
 
@@ -76,10 +74,10 @@ database.ref().on("child_added", function (childSnapshot) {
     $("#train-table").append("<tr><th class='train-name-display' scope='row'>" +
         sv.name +
         " </th><th class='destination-display'>" + sv.destination +
-        " </th><th class='time-display'>" + sv.time +
         " </th><th class='frequency-display'>" + sv.frequency +
-        " </th><th class='status-display'>" + sv.status +
-        " </th></tr>");
+        //convert sv.time to a usable format for moment.js then format for display in hh, which displays hours in standard time
+        " </th><th class='time-display'>" + moment(sv.time, 'HH:mm').format('hh:mm a') +
+        " </th><th class='moment-display'>" + moment(sv.time, 'HH:mm').diff(moment(), "minutes") + "</th></tr>");
     //   $("#train-table").append(row)
     //   $("#train-name-display").text(sv.name);
     //   $("#destination-display").text(sv.destination);
