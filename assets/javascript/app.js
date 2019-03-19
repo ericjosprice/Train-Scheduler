@@ -83,7 +83,7 @@ database.ref().on("child_added", function (childSnapshot) {
     var sMinutes = moment(sv.time, 'HH:mm').diff(moment(), "minutes");
 
     if(sMinutes <= 0) {
-        sMinutes = "-";
+        sMinutes = "Departed";
     }
 
 
