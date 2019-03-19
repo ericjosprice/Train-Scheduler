@@ -71,13 +71,23 @@ database.ref().on("child_added", function (childSnapshot) {
     //     cell.attr("id","#time-display").text(sv.time) +
     //     cell.attr("id","#frequency-display").text(sv.frequency)
     //   );
+
+    // store time variable for display
+    var sArrival = moment(sv.time, 'HH:mm').format('hh:mm a');
+    var sMinutes = moment(sv.time, 'HH:mm').diff(moment(), "minutes");
+
+    if(sMinutes <= 0) {
+        sMinutes = "-";
+    }
+
+
     $("#train-table").append("<tr><th class='train-name-display' scope='row'>" +
         sv.name +
         " </th><th class='destination-display'>" + sv.destination +
         " </th><th class='frequency-display'>" + sv.frequency +
         //convert sv.time to a usable format for moment.js then format for display in hh, which displays hours in standard time
-        " </th><th class='time-display'>" + moment(sv.time, 'HH:mm').format('hh:mm a') +
-        " </th><th class='moment-display'>" + moment(sv.time, 'HH:mm').diff(moment(), "minutes") + "</th></tr>");
+        " </th><th class='time-display'>" + sArrival +
+        " </th><th class='moment-display'>" + sMinutes + "</th></tr>");
     //   $("#train-table").append(row)
     //   $("#train-name-display").text(sv.name);
     //   $("#destination-display").text(sv.destination);
