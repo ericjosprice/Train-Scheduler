@@ -1,3 +1,9 @@
+
+// remaining items to code
+//1. users are still able to input invadit data, which is then displayed 
+//2. past train arrivals should be romoved from the display. 
+//3. next arrival and frequency are not factored into arrival
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAdbTKvQInZr_k2JJGJxbDbWojd_dGV2DA",
